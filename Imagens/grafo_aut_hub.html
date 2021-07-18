@@ -1,0 +1,144 @@
+<html>
+<head>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/vis/4.16.1/vis.css" type="text/css" />
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/vis/4.16.1/vis-network.min.js"> </script>
+<center>
+<h1></h1>
+</center>
+
+<!-- <link rel="stylesheet" href="../node_modules/vis/dist/vis.min.css" type="text/css" />
+<script type="text/javascript" src="../node_modules/vis/dist/vis.js"> </script>-->
+
+<style type="text/css">
+
+        #mynetwork {
+            width: 80%;
+            height: 80%;
+            background-color: #222222;
+            border: 1px solid lightgray;
+            position: relative;
+            float: left;
+        }
+
+        
+
+        
+        #config {
+            float: left;
+            width: 400px;
+            height: 600px;
+        }
+        
+
+        
+</style>
+
+</head>
+
+<body>
+<div id = "mynetwork"></div>
+
+
+<div id = "config"></div>
+
+<script type="text/javascript">
+
+    // initialize global variables.
+    var edges;
+    var nodes;
+    var network; 
+    var container;
+    var options, data;
+
+    
+    // This method is responsible for drawing the graph, returns the drawn network
+    function drawGraph() {
+        var container = document.getElementById('mynetwork');
+        
+        
+
+        // parsing and collecting nodes and edges from the python
+        nodes = new vis.DataSet([{"color": "#00FF00", "font": {"color": "white"}, "id": "\n      Bellewether\n", "label": "\n      Bellewether\n", "shape": "dot", "size": 30, "tipo": "Livro"}, {"color": "orange", "font": {"color": "white"}, "id": "Jennifer", "label": "Jennifer", "shape": "triangle", "size": 30, "tipo": "reviewer"}, {"color": "orange", "font": {"color": "white"}, "id": "Laura", "label": "Laura", "shape": "triangle", "size": 30, "tipo": "reviewer"}, {"color": "orange", "font": {"color": "white"}, "id": "Sarah", "label": "Sarah", "shape": "triangle", "size": 30, "tipo": "reviewer"}, {"color": "orange", "font": {"color": "white"}, "id": "Julie", "label": "Julie", "shape": "triangle", "size": 30, "tipo": "reviewer"}, {"color": "orange", "font": {"color": "white"}, "id": "Michelle", "label": "Michelle", "shape": "triangle", "size": 30, "tipo": "reviewer"}, {"color": "orange", "font": {"color": "white"}, "id": "Amy", "label": "Amy", "shape": "triangle", "size": 30, "tipo": "reviewer"}, {"color": "orange", "font": {"color": "white"}, "id": "Lisa", "label": "Lisa", "shape": "triangle", "size": 30, "tipo": "reviewer"}, {"color": "#00FF00", "font": {"color": "white"}, "id": "\n      The Dutch House\n", "label": "\n      The Dutch House\n", "shape": "dot", "size": 30, "tipo": "Livro"}, {"color": "#00FF00", "font": {"color": "white"}, "id": "\n      The Island of Sea Women\n", "label": "\n      The Island of Sea Women\n", "shape": "dot", "size": 30, "tipo": "Livro"}, {"color": "#00FF00", "font": {"color": "white"}, "id": "\n      The Great Alone\n", "label": "\n      The Great Alone\n", "shape": "dot", "size": 30, "tipo": "Livro"}, {"color": "#00FF00", "font": {"color": "white"}, "id": "\n      The Immortalists\n", "label": "\n      The Immortalists\n", "shape": "dot", "size": 30, "tipo": "Livro"}, {"color": "#00FF00", "font": {"color": "white"}, "id": "\n      Warlight\n", "label": "\n      Warlight\n", "shape": "dot", "size": 30, "tipo": "Livro"}, {"color": "#00FF00", "font": {"color": "white"}, "id": "\n      The Alice Network\n", "label": "\n      The Alice Network\n", "shape": "dot", "size": 30, "tipo": "Livro"}, {"color": "#00FF00", "font": {"color": "white"}, "id": "\n      The Heart\u0027s Invisible Furies\n", "label": "\n      The Heart\u0027s Invisible Furies\n", "shape": "dot", "size": 30, "tipo": "Livro"}, {"color": "#00FF00", "font": {"color": "white"}, "id": "\n      Love and Other Consolation Prizes\n", "label": "\n      Love and Other Consolation Prizes\n", "shape": "dot", "size": 30, "tipo": "Livro"}, {"color": "#00FF00", "font": {"color": "white"}, "id": "\n      Lilac Girls\n", "label": "\n      Lilac Girls\n", "shape": "dot", "size": 30, "tipo": "Livro"}, {"color": "#FF00FF", "font": {"color": "white"}, "id": "\n      The Library Book\n", "label": "\n      The Library Book\n", "shape": "dot", "size": 30, "tipo": "Livro"}, {"color": "#00FF00", "font": {"color": "white"}, "id": "\n      The Firebird\n", "label": "\n      The Firebird\n", "shape": "dot", "size": 30, "tipo": "Livro"}, {"color": "#00FF00", "font": {"color": "white"}, "id": "\n      Circling the Sun\n", "label": "\n      Circling the Sun\n", "shape": "dot", "size": 30, "tipo": "Livro"}, {"color": "#00FF00", "font": {"color": "white"}, "id": "\n      The Museum of Extraordinary Things\n", "label": "\n      The Museum of Extraordinary Things\n", "shape": "dot", "size": 30, "tipo": "Livro"}, {"color": "#00FF00", "font": {"color": "white"}, "id": "\n      The Paying Guests\n", "label": "\n      The Paying Guests\n", "shape": "dot", "size": 30, "tipo": "Livro"}, {"color": "#00FF00", "font": {"color": "white"}, "id": "\n      The Secret Life of Violet Grant\n", "label": "\n      The Secret Life of Violet Grant\n", "shape": "dot", "size": 30, "tipo": "Livro"}, {"color": "#00FF00", "font": {"color": "white"}, "id": "\n      Z: A Novel of Zelda Fitzgerald\n", "label": "\n      Z: A Novel of Zelda Fitzgerald\n", "shape": "dot", "size": 30, "tipo": "Livro"}, {"color": "#00FF00", "font": {"color": "white"}, "id": "\n      The Paris Wife\n", "label": "\n      The Paris Wife\n", "shape": "dot", "size": 30, "tipo": "Livro"}, {"color": "#00FF00", "font": {"color": "white"}, "id": "\n      Rules of Civility\n", "label": "\n      Rules of Civility\n", "shape": "dot", "size": 30, "tipo": "Livro"}, {"color": "#FF00FF", "font": {"color": "white"}, "id": "\n      Pirate Hunters: Treasure, Obsession, and the Search for a Legendary Pirate Ship\n", "label": "\n      Pirate Hunters: Treasure, Obsession, and the Search for a Legendary Pirate Ship\n", "shape": "dot", "size": 30, "tipo": "Livro"}, {"color": "#00FF00", "font": {"color": "white"}, "id": "\n      At the Water\u0027s Edge\n", "label": "\n      At the Water\u0027s Edge\n", "shape": "dot", "size": 30, "tipo": "Livro"}, {"color": "orange", "font": {"color": "white"}, "id": "Emily", "label": "Emily", "shape": "triangle", "size": 30, "tipo": "reviewer"}, {"color": "orange", "font": {"color": "white"}, "id": "Katie", "label": "Katie", "shape": "triangle", "size": 30, "tipo": "reviewer"}, {"color": "orange", "font": {"color": "white"}, "id": "Amanda", "label": "Amanda", "shape": "triangle", "size": 30, "tipo": "reviewer"}]);
+        edges = new vis.DataSet([{"color": "#f1dba1", "from": "\n      Bellewether\n", "to": "Jennifer", "weight": 1}, {"color": "#f1dba1", "from": "\n      Bellewether\n", "to": "Laura", "weight": 1}, {"color": "#f1dba1", "from": "\n      Bellewether\n", "to": "Sarah", "weight": 1}, {"color": "#f1dba1", "from": "\n      Bellewether\n", "to": "Julie", "weight": 1}, {"color": "#f1dba1", "from": "\n      Bellewether\n", "to": "Michelle", "weight": 1}, {"color": "#f1dba1", "from": "\n      Bellewether\n", "to": "Amy", "weight": 1}, {"color": "#f1dba1", "from": "Lisa", "to": "\n      The Dutch House\n", "weight": 1}, {"color": "#f1dba1", "from": "Lisa", "to": "\n      The Island of Sea Women\n", "weight": 1}, {"color": "#f1dba1", "from": "Lisa", "to": "\n      The Great Alone\n", "weight": 1}, {"color": "#f1dba1", "from": "Lisa", "to": "\n      The Immortalists\n", "weight": 1}, {"color": "#f1dba1", "from": "Lisa", "to": "\n      Warlight\n", "weight": 1}, {"color": "#f1dba1", "from": "Lisa", "to": "\n      The Alice Network\n", "weight": 1}, {"color": "#f1dba1", "from": "Lisa", "to": "\n      The Heart\u0027s Invisible Furies\n", "weight": 1}, {"color": "#f1dba1", "from": "Lisa", "to": "\n      Love and Other Consolation Prizes\n", "weight": 1}, {"color": "#f1dba1", "from": "Lisa", "to": "\n      Lilac Girls\n", "weight": 1}, {"color": "#f1dba1", "from": "Lisa", "to": "\n      The Library Book\n", "weight": 1}, {"color": "#f1dba1", "from": "Lisa", "to": "\n      The Firebird\n", "weight": 1}, {"color": "#f1dba1", "from": "Lisa", "to": "\n      Circling the Sun\n", "weight": 1}, {"color": "#f1dba1", "from": "Lisa", "to": "\n      The Museum of Extraordinary Things\n", "weight": 1}, {"color": "#f1dba1", "from": "Lisa", "to": "\n      The Paying Guests\n", "weight": 1}, {"color": "#f1dba1", "from": "Lisa", "to": "\n      The Secret Life of Violet Grant\n", "weight": 1}, {"color": "#f1dba1", "from": "Lisa", "to": "\n      Z: A Novel of Zelda Fitzgerald\n", "weight": 1}, {"color": "#f1dba1", "from": "Lisa", "to": "\n      The Paris Wife\n", "weight": 1}, {"color": "#f1dba1", "from": "Lisa", "to": "\n      Rules of Civility\n", "weight": 1}, {"color": "#f1dba1", "from": "Lisa", "to": "\n      Pirate Hunters: Treasure, Obsession, and the Search for a Legendary Pirate Ship\n", "weight": 1}, {"color": "#f1dba1", "from": "Laura", "to": "\n      The Dutch House\n", "weight": 1}, {"color": "#f1dba1", "from": "Laura", "to": "\n      The Great Alone\n", "weight": 1}, {"color": "#f1dba1", "from": "Laura", "to": "\n      The Immortalists\n", "weight": 1}, {"color": "#f1dba1", "from": "Laura", "to": "\n      Warlight\n", "weight": 1}, {"color": "#f1dba1", "from": "Laura", "to": "\n      The Alice Network\n", "weight": 1}, {"color": "#f1dba1", "from": "Laura", "to": "\n      The Heart\u0027s Invisible Furies\n", "weight": 1}, {"color": "#f1dba1", "from": "Laura", "to": "\n      Love and Other Consolation Prizes\n", "weight": 1}, {"color": "#f1dba1", "from": "Laura", "to": "\n      Lilac Girls\n", "weight": 1}, {"color": "#f1dba1", "from": "Laura", "to": "\n      The Firebird\n", "weight": 1}, {"color": "#f1dba1", "from": "Laura", "to": "\n      At the Water\u0027s Edge\n", "weight": 1}, {"color": "#f1dba1", "from": "Laura", "to": "\n      Circling the Sun\n", "weight": 1}, {"color": "#f1dba1", "from": "Laura", "to": "\n      The Museum of Extraordinary Things\n", "weight": 1}, {"color": "#f1dba1", "from": "Laura", "to": "\n      The Paying Guests\n", "weight": 1}, {"color": "#f1dba1", "from": "Laura", "to": "\n      The Secret Life of Violet Grant\n", "weight": 1}, {"color": "#f1dba1", "from": "Laura", "to": "\n      Z: A Novel of Zelda Fitzgerald\n", "weight": 1}, {"color": "#f1dba1", "from": "Laura", "to": "\n      The Paris Wife\n", "weight": 1}, {"color": "#f1dba1", "from": "Laura", "to": "\n      Rules of Civility\n", "weight": 1}, {"color": "#f1dba1", "from": "Laura", "to": "\n      Pirate Hunters: Treasure, Obsession, and the Search for a Legendary Pirate Ship\n", "weight": 1}, {"color": "#f1dba1", "from": "\n      Rules of Civility\n", "to": "Sarah", "weight": 1}, {"color": "#f1dba1", "from": "\n      Rules of Civility\n", "to": "Amy", "weight": 1}, {"color": "#f1dba1", "from": "\n      Rules of Civility\n", "to": "Emily", "weight": 1}, {"color": "#f1dba1", "from": "\n      Rules of Civility\n", "to": "Jennifer", "weight": 1}, {"color": "#f1dba1", "from": "\n      Rules of Civility\n", "to": "Michelle", "weight": 1}, {"color": "#f1dba1", "from": "Emily", "to": "\n      The Island of Sea Women\n", "weight": 1}, {"color": "#f1dba1", "from": "Emily", "to": "\n      The Great Alone\n", "weight": 1}, {"color": "#f1dba1", "from": "Emily", "to": "\n      The Immortalists\n", "weight": 1}, {"color": "#f1dba1", "from": "Emily", "to": "\n      Love and Other Consolation Prizes\n", "weight": 1}, {"color": "#f1dba1", "from": "Emily", "to": "\n      Lilac Girls\n", "weight": 1}, {"color": "#f1dba1", "from": "Emily", "to": "\n      The Library Book\n", "weight": 1}, {"color": "#f1dba1", "from": "Emily", "to": "\n      At the Water\u0027s Edge\n", "weight": 1}, {"color": "#f1dba1", "from": "Emily", "to": "\n      The Museum of Extraordinary Things\n", "weight": 1}, {"color": "#f1dba1", "from": "Emily", "to": "\n      The Paying Guests\n", "weight": 1}, {"color": "#f1dba1", "from": "Emily", "to": "\n      The Paris Wife\n", "weight": 1}, {"color": "#f1dba1", "from": "Emily", "to": "\n      Pirate Hunters: Treasure, Obsession, and the Search for a Legendary Pirate Ship\n", "weight": 1}, {"color": "#f1dba1", "from": "\n      The Paying Guests\n", "to": "Julie", "weight": 1}, {"color": "#f1dba1", "from": "\n      The Paying Guests\n", "to": "Sarah", "weight": 1}, {"color": "#f1dba1", "from": "\n      The Paying Guests\n", "to": "Amy", "weight": 1}, {"color": "#f1dba1", "from": "\n      The Paying Guests\n", "to": "Jennifer", "weight": 1}, {"color": "#f1dba1", "from": "\n      The Island of Sea Women\n", "to": "Katie", "weight": 1}, {"color": "#f1dba1", "from": "\n      The Island of Sea Women\n", "to": "Jennifer", "weight": 1}, {"color": "#f1dba1", "from": "\n      The Island of Sea Women\n", "to": "Amanda", "weight": 1}, {"color": "#f1dba1", "from": "\n      The Island of Sea Women\n", "to": "Amy", "weight": 1}, {"color": "#f1dba1", "from": "\n      The Island of Sea Women\n", "to": "Sarah", "weight": 1}, {"color": "#f1dba1", "from": "\n      The Island of Sea Women\n", "to": "Michelle", "weight": 1}, {"color": "#f1dba1", "from": "\n      The Great Alone\n", "to": "Sarah", "weight": 1}, {"color": "#f1dba1", "from": "\n      The Great Alone\n", "to": "Jennifer", "weight": 1}, {"color": "#f1dba1", "from": "\n      The Great Alone\n", "to": "Michelle", "weight": 1}, {"color": "#f1dba1", "from": "\n      The Great Alone\n", "to": "Julie", "weight": 1}, {"color": "#f1dba1", "from": "\n      The Great Alone\n", "to": "Amy", "weight": 1}, {"color": "#f1dba1", "from": "\n      The Library Book\n", "to": "Michelle", "weight": 1}, {"color": "#f1dba1", "from": "\n      The Library Book\n", "to": "Katie", "weight": 1}, {"color": "#f1dba1", "from": "\n      The Library Book\n", "to": "Julie", "weight": 1}, {"color": "#f1dba1", "from": "\n      The Library Book\n", "to": "Jennifer", "weight": 1}, {"color": "#f1dba1", "from": "\n      The Firebird\n", "to": "Michelle", "weight": 1}, {"color": "#f1dba1", "from": "\n      The Firebird\n", "to": "Amanda", "weight": 1}, {"color": "#f1dba1", "from": "\n      The Firebird\n", "to": "Sarah", "weight": 1}, {"color": "#f1dba1", "from": "\n      The Firebird\n", "to": "Katie", "weight": 1}, {"color": "#f1dba1", "from": "\n      The Firebird\n", "to": "Amy", "weight": 1}, {"color": "#f1dba1", "from": "\n      The Firebird\n", "to": "Jennifer", "weight": 1}, {"color": "#f1dba1", "from": "\n      The Firebird\n", "to": "Julie", "weight": 1}, {"color": "#f1dba1", "from": "\n      The Secret Life of Violet Grant\n", "to": "Jennifer", "weight": 1}, {"color": "#f1dba1", "from": "\n      The Secret Life of Violet Grant\n", "to": "Amy", "weight": 1}, {"color": "#f1dba1", "from": "\n      The Secret Life of Violet Grant\n", "to": "Michelle", "weight": 1}, {"color": "#f1dba1", "from": "\n      The Secret Life of Violet Grant\n", "to": "Amanda", "weight": 1}, {"color": "#f1dba1", "from": "\n      The Secret Life of Violet Grant\n", "to": "Katie", "weight": 1}, {"color": "#f1dba1", "from": "\n      The Secret Life of Violet Grant\n", "to": "Sarah", "weight": 1}, {"color": "#f1dba1", "from": "\n      The Secret Life of Violet Grant\n", "to": "Julie", "weight": 1}, {"color": "#f1dba1", "from": "Sarah", "to": "\n      The Dutch House\n", "weight": 1}, {"color": "#f1dba1", "from": "Sarah", "to": "\n      The Immortalists\n", "weight": 1}, {"color": "#f1dba1", "from": "Sarah", "to": "\n      Warlight\n", "weight": 1}, {"color": "#f1dba1", "from": "Sarah", "to": "\n      The Alice Network\n", "weight": 1}, {"color": "#f1dba1", "from": "Sarah", "to": "\n      Love and Other Consolation Prizes\n", "weight": 1}, {"color": "#f1dba1", "from": "Sarah", "to": "\n      Lilac Girls\n", "weight": 1}, {"color": "#f1dba1", "from": "Sarah", "to": "\n      At the Water\u0027s Edge\n", "weight": 1}, {"color": "#f1dba1", "from": "Sarah", "to": "\n      Circling the Sun\n", "weight": 1}, {"color": "#f1dba1", "from": "Sarah", "to": "\n      The Museum of Extraordinary Things\n", "weight": 1}, {"color": "#f1dba1", "from": "Sarah", "to": "\n      Z: A Novel of Zelda Fitzgerald\n", "weight": 1}, {"color": "#f1dba1", "from": "Sarah", "to": "\n      Pirate Hunters: Treasure, Obsession, and the Search for a Legendary Pirate Ship\n", "weight": 1}, {"color": "#f1dba1", "from": "\n      Z: A Novel of Zelda Fitzgerald\n", "to": "Amy", "weight": 1}, {"color": "#f1dba1", "from": "\n      Z: A Novel of Zelda Fitzgerald\n", "to": "Katie", "weight": 1}, {"color": "#f1dba1", "from": "\n      Z: A Novel of Zelda Fitzgerald\n", "to": "Julie", "weight": 1}, {"color": "#f1dba1", "from": "\n      Z: A Novel of Zelda Fitzgerald\n", "to": "Michelle", "weight": 1}, {"color": "#f1dba1", "from": "\n      The Alice Network\n", "to": "Jennifer", "weight": 1}, {"color": "#f1dba1", "from": "\n      The Alice Network\n", "to": "Amy", "weight": 1}, {"color": "#f1dba1", "from": "\n      The Alice Network\n", "to": "Michelle", "weight": 1}, {"color": "#f1dba1", "from": "\n      The Alice Network\n", "to": "Julie", "weight": 1}, {"color": "#f1dba1", "from": "\n      Love and Other Consolation Prizes\n", "to": "Amy", "weight": 1}, {"color": "#f1dba1", "from": "\n      Love and Other Consolation Prizes\n", "to": "Julie", "weight": 1}, {"color": "#f1dba1", "from": "\n      Love and Other Consolation Prizes\n", "to": "Amanda", "weight": 1}, {"color": "#f1dba1", "from": "\n      Love and Other Consolation Prizes\n", "to": "Michelle", "weight": 1}, {"color": "#f1dba1", "from": "\n      Love and Other Consolation Prizes\n", "to": "Jennifer", "weight": 1}, {"color": "#f1dba1", "from": "\n      The Museum of Extraordinary Things\n", "to": "Katie", "weight": 1}, {"color": "#f1dba1", "from": "\n      The Museum of Extraordinary Things\n", "to": "Amy", "weight": 1}, {"color": "#f1dba1", "from": "\n      The Museum of Extraordinary Things\n", "to": "Julie", "weight": 1}, {"color": "#f1dba1", "from": "\n      The Museum of Extraordinary Things\n", "to": "Jennifer", "weight": 1}, {"color": "#f1dba1", "from": "\n      Lilac Girls\n", "to": "Jennifer", "weight": 1}, {"color": "#f1dba1", "from": "\n      Lilac Girls\n", "to": "Julie", "weight": 1}, {"color": "#f1dba1", "from": "\n      Lilac Girls\n", "to": "Amy", "weight": 1}, {"color": "#f1dba1", "from": "\n      Lilac Girls\n", "to": "Michelle", "weight": 1}, {"color": "#f1dba1", "from": "\n      Circling the Sun\n", "to": "Jennifer", "weight": 1}, {"color": "#f1dba1", "from": "\n      Circling the Sun\n", "to": "Amy", "weight": 1}, {"color": "#f1dba1", "from": "Amanda", "to": "\n      Warlight\n", "weight": 1}, {"color": "#f1dba1", "from": "Amanda", "to": "\n      The Paris Wife\n", "weight": 1}, {"color": "#f1dba1", "from": "Amanda", "to": "\n      Pirate Hunters: Treasure, Obsession, and the Search for a Legendary Pirate Ship\n", "weight": 1}, {"color": "#f1dba1", "from": "\n      Pirate Hunters: Treasure, Obsession, and the Search for a Legendary Pirate Ship\n", "to": "Amy", "weight": 1}, {"color": "#f1dba1", "from": "\n      Pirate Hunters: Treasure, Obsession, and the Search for a Legendary Pirate Ship\n", "to": "Katie", "weight": 1}, {"color": "#f1dba1", "from": "\n      Pirate Hunters: Treasure, Obsession, and the Search for a Legendary Pirate Ship\n", "to": "Michelle", "weight": 1}, {"color": "#f1dba1", "from": "Katie", "to": "\n      The Dutch House\n", "weight": 1}, {"color": "#f1dba1", "from": "Katie", "to": "\n      Warlight\n", "weight": 1}, {"color": "#f1dba1", "from": "\n      Warlight\n", "to": "Julie", "weight": 1}, {"color": "#f1dba1", "from": "\n      Warlight\n", "to": "Jennifer", "weight": 1}, {"color": "#f1dba1", "from": "\n      Warlight\n", "to": "Michelle", "weight": 1}, {"color": "#f1dba1", "from": "\n      At the Water\u0027s Edge\n", "to": "Jennifer", "weight": 1}, {"color": "#f1dba1", "from": "\n      At the Water\u0027s Edge\n", "to": "Amy", "weight": 1}, {"color": "#f1dba1", "from": "Jennifer", "to": "\n      The Dutch House\n", "weight": 1}, {"color": "#f1dba1", "from": "Jennifer", "to": "\n      The Immortalists\n", "weight": 1}, {"color": "#f1dba1", "from": "Jennifer", "to": "\n      The Heart\u0027s Invisible Furies\n", "weight": 1}, {"color": "#f1dba1", "from": "Jennifer", "to": "\n      The Paris Wife\n", "weight": 1}, {"color": "#f1dba1", "from": "\n      The Paris Wife\n", "to": "Michelle", "weight": 1}, {"color": "#f1dba1", "from": "\n      The Paris Wife\n", "to": "Amy", "weight": 1}, {"color": "#f1dba1", "from": "Julie", "to": "\n      The Dutch House\n", "weight": 1}, {"color": "#f1dba1", "from": "Michelle", "to": "\n      The Dutch House\n", "weight": 1}, {"color": "#f1dba1", "from": "Michelle", "to": "\n      The Immortalists\n", "weight": 1}, {"color": "#f1dba1", "from": "Michelle", "to": "\n      The Heart\u0027s Invisible Furies\n", "weight": 1}, {"color": "#f1dba1", "from": "Amy", "to": "\n      The Immortalists\n", "weight": 1}, {"color": "#f1dba1", "from": "Amy", "to": "\n      The Heart\u0027s Invisible Furies\n", "weight": 1}]);
+
+        // adding nodes and edges to the graph
+        data = {nodes: nodes, edges: edges};
+
+        var options = {
+    "configure": {
+        "enabled": true,
+        "filter": [
+            "physics"
+        ]
+    },
+    "nodes": {
+        "font": {
+           "size": 65
+        },
+        "scaling": {
+           "min": 70,
+           "max": 103
+        },
+       "size": 300
+    },
+    "edges": {
+        "color": {
+            "inherit": true
+        },
+        "hoverWidth": 8.0,
+        "selectionWidth": 8.0,
+        "smooth": {
+            
+            "forcedDirection": "none"
+        }
+    },
+    "interaction": {
+        "dragNodes": true,
+        "hideEdgesOnDrag": false,
+        "hideNodesOnDrag": false,
+        "hover":true
+    },
+    "physics": {
+        "barnesHut": {
+            "avoidOverlap": 0,
+            "centralGravity": 0.3,
+            "damping": 0.09,
+            "gravitationalConstant": -80000,
+            "springConstant": 0.001,
+            "springLength": 200
+        },
+        "enabled": true,
+        "stabilization": {
+            "enabled": true,
+            "fit": true,
+            "iterations": 1000,
+            "onlyDynamicEdges": false,
+            "updateInterval": 50
+        }
+    }
+};
+        
+        
+
+        
+        // if this network requires displaying the configure window,
+        // put it in its div
+        options.configure["container"] = document.getElementById("config");
+        
+
+        network = new vis.Network(container, data, options);
+	 
+        
+
+
+        
+
+        return network;
+
+    }
+
+    drawGraph();
+
+</script>
+</body>
+</html>

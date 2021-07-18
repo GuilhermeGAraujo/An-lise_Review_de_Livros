@@ -4,26 +4,30 @@ import pandas as pd
 df=pd.read_csv(
     r'C:\Users\guilh\OneDrive\Documentos\Projetos\Analise_Review_de_Livros\livros_df.csv',
     index_col=0)
-
 print(df.groupby('Genero').count()['Titulo'])
 """Genero
 Audiobook          1
-Business           1
-Christian          1
-Crime              3
+Business           8
+Crime              5
 Dark               1
-Economics          1
-Fantasy          107
-Fiction           23
-Historical        80
-Horror            72
-Mystery            2
-Nonfiction        81
-Politics           1
+Economics          2
+Education          1
+Fantasy          214
+Fiction           47
+Historical       160
+Horror           134
+Mystery            7
+Nonfiction       153
+Paranormal         2
+Parenting          2
+Philosophy         1
+Politics           2
 Religion           2
-Short Stories      2
-Sports             1
-Thriller           6
+Science            5
+Science Fiction    2
+Short Stories      3
+Sports             2
+Thriller          13
 """
 # =============================================================================
 # Podemos ver que temos muito mais gêneros dos que os cinco correspondentes da 
@@ -43,29 +47,38 @@ Thriller           6
 # pra visualizações futuras. É bem provavel que haverá classificações errôneas
 # =============================================================================
 
-#Dark,Thriller,Mystery = Horror
-generos =['Dark','Thriller','Mystery']
+#Dark,Thriller,Mystery,Paranormal = Horror
+generos =['Dark','Thriller','Mystery','Paranormal']
 df.loc[df['Genero'].isin(generos),'Genero']='Horror'
 #Historical, Fiction = Historical Fiction
 generos = ['Historical', 'Fiction']
 df.loc[df['Genero'].isin(generos),'Genero']='Historical Fiction'
 
-#Audiobook, Business,Christian, Crime,Economics,Politcs,Religion,Sports = 
-#Non Fiction
-generos = ['Audiobook','Business','Christian', 'Crime','Economics','Politics',
-           'Religion','Sports','Nonfiction']
+#Audiobook, Business,Crime,Economics, Education,Parenting,Philosophy, Politcs,
+#Religion,Science,Sports = Non Fiction
+generos = ['Audiobook','Business', 'Crime','Economics','Education', 'Parenting',
+           'Philosophy','Politics','Religion','Science','Sports','Nonfiction']
 df.loc[df['Genero'].isin(generos),'Genero']='Non Fiction'
 # =============================================================================
-# As duas short stories são:
+# As 3 short stories e 2 ficções científicas são:
 # The Paper Menagerie and Other Stories - Fantasia
 # The Merry Spinster: Tales of Everyday Horror - Horror
+# Stay Awake - Horror
+# The Last Town - Horror
+# White Horse
 # =============================================================================
 df.loc[87,'Genero']='Fantasy'
 df.loc[145,'Genero'] = 'Horror'
+df.loc[544,'Genero'] ='Horror'
+df.loc[510,'Genero'] ='Horror'
+df.loc[545,'Genero'] ='Horror'
 
-# Todas as sinopses terminam com (less), tabmém a uma sinopse nula
+# Todas as sinopses terminam com (less), também há sinopses nulas
 df =df.dropna(subset=['Sinopse'])
 df['Sinopse']=df['Sinopse'].apply(lambda x: x[:-6])
-
 df.to_csv(
     r'C:\Users\guilh\OneDrive\Documentos\Projetos\Analise_Review_de_Livros\livros_df.csv')
+
+
+
+

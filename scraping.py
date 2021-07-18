@@ -8,8 +8,10 @@ de 5 categorias classificados como os melhores de 2020 pelo site goodreads.com.
 import requests
 import time
 from bs4 import BeautifulSoup
+import bs4
 import re
 import random
+import selenium
 from selenium import webdriver
 from selenium.webdriver.support.ui import WebDriverWait       
 from selenium.webdriver.common.by import By
@@ -18,8 +20,8 @@ from selenium.common.exceptions import ElementClickInterceptedException
 from selenium.common.exceptions import StaleElementReferenceException
 from selenium.webdriver.support import expected_conditions as EC
 import pandas as pd
-
-
+print (requests.__version__, bs4.__version__,selenium.__version__)
+#%%
   
 #Extração dos links dos livro a partir da lista
 def get_url_livros(url_list):
@@ -40,8 +42,7 @@ def get_livro(livro_url):
     l_source=requests.get(livro_url).text
     l_page = BeautifulSoup(l_source,'lxml')
     #Coletando dos do livro
-    titulo =l_page.find(id='bookTitle').text
-    livro_id=re.search(r'[0-9]+\D',livro_url).group(0)[-1]
+    titulo =l_page.find(id='bookTitle').text    
     serie =l_page.find(id='bookSeries').text
     autor = l_page.find('a',class_='authorName').text
     busca= l_page.find('a',class_='authorName')['href'] 
@@ -84,10 +85,10 @@ def get_livro(livro_url):
         except StaleElementReferenceException:
             prox_page = None
         time.sleep(random.uniform(1,3))
-    print(get_livro.contador + ' livros coletados')
-    livro_dict={'Titulo':titulo,'ID_Livro':livro_id,'Serie':serie,'Autor':autor,
-           'ID_Autor':autor_id,'Genero':genero,'Nota':nota,'Sinopse':sinopse,
-           'Numero_Avaliaçoes': num_notas,'Reviewer':reviewer_dict}
+    print(str(get_livro.contador) + ' livros coletados')
+    livro_dict={'Titulo':titulo,'Serie':serie,'Autor':autor,'ID_Autor':autor_id,
+                'Genero':genero,'Nota':nota,'Sinopse':sinopse,
+                'Numero_Avaliaçoes': num_notas,'Reviewer':reviewer_dict}
     return livro_dict
   
 lista_url_scrape=[
@@ -106,16 +107,31 @@ lista_url_scrape=[
     'https://www.goodreads.com/choiceawards/best-historical-fiction-books-2018',
     'https://www.goodreads.com/choiceawards/best-historical-fiction-books-2017',
     'https://www.goodreads.com/choiceawards/best-historical-fiction-books-2016',
-    'https://www.goodreads.com/choiceawards/best-historical-fiction-books-2020',
-    'https://www.goodreads.com/choiceawards/best-historical-fiction-books-2019',
-    'https://www.goodreads.com/choiceawards/best-historical-fiction-books-2018',
-    'https://www.goodreads.com/choiceawards/best-historical-fiction-books-2017',
-    'https://www.goodreads.com/choiceawards/best-historical-fiction-books-2016',
     'https://www.goodreads.com/choiceawards/best-nonfiction-books-2020',
     'https://www.goodreads.com/choiceawards/best-nonfiction-books-2019',
     'https://www.goodreads.com/choiceawards/best-nonfiction-books-2018',
     'https://www.goodreads.com/choiceawards/best-nonfiction-books-2017',
-    'https://www.goodreads.com/choiceawards/best-nonfiction-books-2016'
+    'https://www.goodreads.com/choiceawards/best-nonfiction-books-2016',
+    'https://www.goodreads.com/choiceawards/best-fantasy-books-2015',
+    'https://www.goodreads.com/choiceawards/best-fantasy-books-2014',
+    'https://www.goodreads.com/choiceawards/best-fantasy-books-2013',
+    'https://www.goodreads.com/choiceawards/best-fantasy-books-2012',
+    'https://www.goodreads.com/choiceawards/best-fantasy-books-2011',
+    'https://www.goodreads.com/choiceawards/best-horror-books-2015',
+    'https://www.goodreads.com/choiceawards/best-horror-books-2014',
+    'https://www.goodreads.com/choiceawards/best-horror-books-2013',
+    'https://www.goodreads.com/choiceawards/best-horror-books-2012',
+    'https://www.goodreads.com/choiceawards/best-horror-books-2011',
+    'https://www.goodreads.com/choiceawards/best-historical-fiction-books-2015',
+    'https://www.goodreads.com/choiceawards/best-historical-fiction-books-2014',
+    'https://www.goodreads.com/choiceawards/best-historical-fiction-books-2013',
+    'https://www.goodreads.com/choiceawards/best-historical-fiction-books-2012',
+    'https://www.goodreads.com/choiceawards/best-historical-fiction-books-2011',
+    'https://www.goodreads.com/choiceawards/best-nonfiction-books-2015',
+    'https://www.goodreads.com/choiceawards/best-nonfiction-books-2014',
+    'https://www.goodreads.com/choiceawards/best-nonfiction-books-2013',
+    'https://www.goodreads.com/choiceawards/best-nonfiction-books-2012',
+    'https://www.goodreads.com/choiceawards/best-nonfiction-books-2011'
     ]
 
 
